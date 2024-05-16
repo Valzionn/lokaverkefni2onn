@@ -16,7 +16,7 @@ export const createOrder = async (orderData: any) => {
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);
   }
-};
+}
 
 export const fetchLatestOrder = async () => {
   try {
