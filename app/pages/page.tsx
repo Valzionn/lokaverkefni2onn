@@ -2,11 +2,11 @@
 //installa react-router-dom
 import React from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import HomePage from "./HomePage";
-import MenuPage from "./MenuPage";
-import DrinkPage from "./DrinkPage";
-import OrderPage from "./OrderPage";
-import ReceiptPage from "./ReceiptPage";
+import HomePage from "../components/HomePage";
+import MenuPage from "../components/MenuPage";
+import DrinkPage from "../components/DrinkPage";
+import OrderPage from "../components/OrderPage";
+import ReceiptPage from "../components/ReceiptPage";
 
 const App:React.FC = () => {
   return (
