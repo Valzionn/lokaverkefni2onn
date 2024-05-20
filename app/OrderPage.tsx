@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { createOrder } from "../api"
+import { createOrder } from "./api"
 import { useNavigate } from "react-router-dom"
 
 const OrderPage: React.FC = () => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchLatestOrder } from "../api"
+import { fetchLatestOrder } from "./api"
 
 const ReceiptPage: React.FC = () => {
     const [order, setOrder] = useState<any>(null)
