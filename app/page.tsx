@@ -1,13 +1,13 @@
-'use client'
+"use client";
 //installa react-router-dom
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import HomePage from "./HomePage";
 import MenuPage from "./MenuPage";
 import DrinkPage from "./DrinkPage";
 import OrderPage from "./OrderPage";
 import ReceiptPage from "./ReceiptPage";
 
-const App:React.FC = () => {
+export default function Home() {
   return (
     <Router>
       <Routes>
@@ -18,7 +18,5 @@ const App:React.FC = () => {
         <Route path="/receipt" element={<ReceiptPage />}></Route>
       </Routes>
     </Router>
-  )
+  );
 }
-
-export default App;

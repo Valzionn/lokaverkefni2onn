@@ -1,49 +1,66 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { fetchDrinks } from './api';
 
-const DrinkPage: React.FC = () => {
-    const [drinks, setDrinks] = useState<any[]>([])
-    const [selectedDrink, setSelectedDrink] = useState<any>(null)
-    const navigate = useNavigate()
+const DrinkPage = () => {
+    const [drinks, setDrinks] = useState<any[]>([]);
+  const [selectedDrinks, setSelectedDrinks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
 
-    useEffect(() => {
-        fetchDrinks()
-    }, [])
+  useEffect(() => {
+    const getDrinks = async () => {
+      try {
+        const drinksData = await fetchDrinks();
+        setDrinks(drinksData);
+      } catch (err) {
+        setError('Failed to fetch drinks');
+      } finally {
+        setLoading(false);
+      }
+    };
+    getDrinks();
+  }, []);
 
-    const fetchDrinks = async () => {
-        try {
-            const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a')
-            const data = await response.json()
-            setDrinks(data.drinks)
-        } catch (error) {
-            console.error('Error fetching drinks:', error)
-        }
-    }
+  const handleSelectDrink = (drink: any) => {
+    setSelectedDrinks((prev) => {
+      if (prev.includes(drink)) {
+        return prev.filter((d) => d !== drink);
+      }
+      return [...prev, drink];
+    });
+  };
 
-    const handleSelectDrink = (drink: any) => {
-        setSelectedDrink(drink)
-    }
+  const handleNext = () => {
+    navigate('/order', { state: { ...state, selectedDrinks } });
+  };
 
-    const handleContinue = () => {
-        if (selectedDrink) {
-            navigate('/order')
-        }
-    }
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-    return (
-        <div>
-            <h1>Select a Drink</h1>
-            <div>
-                {drinks.map((drink) => (
-                    <div key={drink.idDrink} onClick={() => handleSelectDrink(drink)}>
-                        <h2>{drink.strDrink}</h2>
-                        <img src={drink.strDrinkThumb} alt={drink.strDrink} />
-                    </div>
-                ))}
-            </div>
-            <button onClick={handleContinue} disabled={!selectedDrink}>Continue</button>
-        </div>
-    )
-}
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <div>
+      <h1>Drinks</h1>
+      <div>
+        {drinks.map((drink) => (
+          <div key={drink.idDrink} onClick={() => handleSelectDrink(drink)}>
+            <h2>{drink.strDrink}</h2>
+            <img src={drink.strDrinkThumb} alt={drink.strDrink} />
+            {selectedDrinks.includes(drink) && <span>Selected</span>}
+          </div>
+        ))}
+      </div>
+      <button onClick={handleNext}>Next</button>
+    </div>
+  );
+};
 
 export default DrinkPage;

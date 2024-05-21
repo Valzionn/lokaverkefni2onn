@@ -1,40 +1,54 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { fetchRandomDish } from './api';
 
-const MenuPage: React.FC = () => {
-    const [meal, setMeal] = useState<any>(null)
-    const navigate = useNavigate()
-  
-    useEffect(() => {
-      fetchRandomMeal()
-    }, [])
-  
-    const fetchRandomMeal = async () => {
+const MenuPage = () => {
+  const [dish, setDish] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getDish = async () => {
       try {
-        const response = await fetch('https://themealdb.com/api/json/v1/1/random.php')
-        const data = await response.json();
-        setMeal(data.meals[0])
-      } catch (error) {
-        console.error('Error fetching random meal:', error)
+        const randomDish = await fetchRandomDish();
+        setDish(randomDish);
+      } catch (err) {
+        setError('Failed to fetch dish');
+      } finally {
+        setLoading(false);
       }
-    }
-  
-    const handleContinue = () => {
-      navigate('/drink')
-    }
-  
-    return (
-      <div>
-        {meal && (
-          <div>
-            <h1>{meal.strMeal}</h1>
-            <img src={meal.strMealThumb} alt={meal.strMeal} />
-            <button onClick={fetchRandomMeal}>Choose Another</button>
-            <button onClick={handleContinue}>Continue</button>
-          </div>
-        )}
-      </div>
-    )
+    };
+    getDish();
+  }, []);
+
+  const handleNext = () => {
+    navigate('/drink', { state: { dish } });
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
-  
-  export default MenuPage;
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <div>
+      <h1>Menu</h1>
+      {dish ? (
+        <div>
+          <h2>{dish.strMeal}</h2>
+          <img src={dish.strMealThumb} alt={dish.strMeal} />
+          <p>{dish.strInstructions}</p>
+        </div>
+      ) : (
+        <p>No dish available</p>
+      )}
+      <button onClick={handleNext}>Next</button>
+    </div>
+  );
+};
+
+export default MenuPage;

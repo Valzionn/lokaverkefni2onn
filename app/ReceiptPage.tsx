@@ -1,36 +1,33 @@
-import { useEffect, useState } from "react"
-import { fetchLatestOrder } from "./api"
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const ReceiptPage: React.FC = () => {
-    const [order, setOrder] = useState<any>(null)
+const ReceiptPage = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
 
-    useEffect(() => {
-        fetchOrder()
-    }, [])
+  const calculatePrice = () => {
+    const foodPrice = state.people * 10;
+    const drinksPrice = state.selectedDrinks.length * 5;
+    return foodPrice + drinksPrice;
+  };
 
-    const fetchOrder = async () => {
-        try {
-            const data = await fetchLatestOrder()
-            setOrder(data)
-        } catch (error) {
-            console.error('Error fetching order:', error)
-        }
-    }
-
-    if (!order) {
-        return <div>Loading...</div>
-    }
-
-    return (
-        <div>
-            <h1>Kvittun</h1>
-            <div>
-                <h2>Matur: {order.meal}</h2>
-                <h2>Drykkur: {order.drink}</h2>
-                <h2>Samtals: {order.total}</h2>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div>
+      <h1>Receipt</h1>
+      <div>
+        <h2>Order Summary</h2>
+        <p>Dish: {state.dish.strMeal}</p>
+        <p>Drinks: {state.selectedDrinks.map((drink: any) => drink.strDrink).join(', ')}</p>
+        <p>Number of People: {state.people}</p>
+        <p>Date: {state.date}</p>
+        <p>Time: {state.time}</p>
+        <p>Email: {state.email}</p>
+        <p>Total Price: ${calculatePrice()}</p>
+      </div>
+      <button onClick={() => navigate('/')}>Back to Home</button>
+    </div>
+  );
+};
 
 export default ReceiptPage;
