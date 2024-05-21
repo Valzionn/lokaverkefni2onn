@@ -24,15 +24,18 @@ export const fetchOrderByEmail = async (email: string): Promise<Order | null> =>
 };
 
 export const createOrder = async (order: Omit<Order, 'id'>): Promise<Order> => {
+  console.log("Sending order:", order);
   const response = await fetch(createOrderUrl, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(order),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(order),
   });
+
   return handleResponse<Order>(response);
 };
+
 
 const transformToProvision = (data: any): Provision => {
   const defaultPrice = 1500; // Adjust the default price based on your application's typical range
@@ -84,16 +87,17 @@ export const fetchOrders = async (): Promise<Order[]> => {
   return handleResponse<Order[]>(response);
 };
 
-export const updateOrder = async (id: number, order: Partial<Omit<Order, 'id'>>): Promise<Order> => {
+export const updateOrder = async (order: Order): Promise<Order> => {
   const response = await fetch(updateOrderUrl, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id, ...order }),
+    body: JSON.stringify(order),
   });
   return handleResponse<Order>(response);
 };
+
 
 export const deleteOrder = async (id: number): Promise<{ success: boolean; deletedorder?: Order }> => {
   const response = await fetch(orderByIdUrl(id), {
