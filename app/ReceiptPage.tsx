@@ -11,8 +11,8 @@ const ReceiptPage = () => {
   }
 
   const calculatePrice = () => {
-    const foodPrice = state.count * state.dish.price; // Price for food multiplied by count
-    const drinksPrice = state.drinks.reduce((total: number, drink: any) => total + drink.price, 0); // Sum price of all drinks
+    const foodPrice = state.count * state.dish.price;
+    const drinksPrice = state.drinks.reduce((total: number, drink: any) => total + drink.price, 0);
     return foodPrice + drinksPrice;
   };
 

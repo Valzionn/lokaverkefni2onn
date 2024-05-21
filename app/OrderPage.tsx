@@ -13,7 +13,6 @@ const OrderPage = () => {
   const { dish, selectedDrinks } = location.state as { dish: Dish, selectedDrinks: Drink[] };
 
   useEffect(() => {
-    // Pre-fill date with current date
     setDate(new Date().toISOString().slice(0, 10));
   }, []);
 
@@ -32,6 +31,12 @@ const OrderPage = () => {
   const handleNext = async () => {
     setError(null);
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Invalid email format.');
+      return;
+    }
+
     if (!dish || !selectedDrinks) {
       setError('Dish and drinks are required.');
       return;
@@ -41,7 +46,7 @@ const OrderPage = () => {
       email,
       dish,
       count,
-      date: new Date(date), // Ensure date is a Date object
+      date: new Date(date),
       drinks: selectedDrinks,
     };
 

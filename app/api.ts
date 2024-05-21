@@ -24,7 +24,6 @@ export const fetchOrderByEmail = async (email: string): Promise<Order | null> =>
 };
 
 export const createOrder = async (order: Omit<Order, 'id'>): Promise<Order> => {
-  console.log("Sending order:", order);
   const response = await fetch(createOrderUrl, {
     method: 'POST',
     headers: {
@@ -35,30 +34,6 @@ export const createOrder = async (order: Omit<Order, 'id'>): Promise<Order> => {
 
   return handleResponse<Order>(response);
 };
-
-
-const transformToProvision = (data: any): Provision => {
-  const defaultPrice = 1500; // Adjust the default price based on your application's typical range
-
-  return {
-    id: data.idMeal || data.idDrink,
-    name: data.strMeal || data.strDrink,
-    description: data.strInstructions,
-    imageSource: data.strMealThumb || data.strDrinkThumb,
-    price: parseFloat(data.price) || defaultPrice, // Use parseFloat to ensure a number
-    category: data.strCategory,
-  };
-};
-
-const transformMealToDish = (meal: any): Dish => ({
-  ...transformToProvision(meal),
-  cousine: meal.strArea,
-});
-
-const transformDrinkToDrink = (drink: any): Drink => ({
-  ...transformToProvision(drink),
-  brewer: drink.strAlcoholic,
-});
 
 export const fetchRandomDish = async (): Promise<Dish | null> => {
   try {
@@ -98,10 +73,30 @@ export const updateOrder = async (order: Order): Promise<Order> => {
   return handleResponse<Order>(response);
 };
 
-
 export const deleteOrder = async (id: number): Promise<{ success: boolean; deletedorder?: Order }> => {
   const response = await fetch(orderByIdUrl(id), {
     method: 'DELETE',
   });
   return handleResponse<{ success: boolean; deletedorder?: Order }>(response);
 };
+
+const transformToProvision = (data: any): Provision => {
+  return {
+    id: data.idMeal || data.idDrink,
+    name: data.strMeal || data.strDrink,
+    description: data.strInstructions,
+    imageSource: data.strMealThumb || data.strDrinkThumb,
+    price: 1500, // Assigning a default price
+    category: data.strCategory,
+  };
+};
+
+const transformMealToDish = (meal: any): Dish => ({
+  ...transformToProvision(meal),
+  cousine: meal.strArea,
+});
+
+const transformDrinkToDrink = (drink: any): Drink => ({
+  ...transformToProvision(drink),
+  brewer: drink.strAlcoholic,
+});
