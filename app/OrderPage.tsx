@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createOrder, updateOrder } from './api';
+import { createOrder } from './api';
+import { Order, Dish, Drink } from './types';
 
 const OrderPage = () => {
   const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [people, setPeople] = useState(1);
+  const [count, setCount] = useState(1);
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = location;
+  const { state } = location as { state: Partial<Order> & { dish: Dish, selectedDrinks: Drink[] } };
 
   useEffect(() => {
     if (state && state.email) {
@@ -22,12 +22,8 @@ const OrderPage = () => {
     setDate(e.target.value);
   };
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTime(e.target.value);
-  };
-
-  const handlePeopleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPeople(parseInt(e.target.value));
+  const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCount(parseInt(e.target.value));
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,41 +32,27 @@ const OrderPage = () => {
 
   const handleNext = async () => {
     setError(null); // Reset error state
-    const order = {
-      ...state,
-      date,
-      time,
-      people,
+    const order: Omit<Order, 'id'> = {
+      date: new Date(date), // Ensure this is a Date object
+      count,
       email,
       dish: state.dish,
-      drinks: state.selectedDrinks
+      drinks: state.selectedDrinks || [] // Ensure drinks is always an array
     };
 
-    console.log('Order Data:', order); // Log the order data to ensure it's correct
-    
+    console.log('Order Data:', JSON.stringify(order, null, 2)); // Log the order data to ensure it's correct
+
     try {
-      let response;
-      if (state && state.id) {
-        response = await updateOrder(state.id, order);
-      } else {
-        response = await createOrder(order);
-      }
-
-      console.log('API Response:', response); // Log the API response
-
-      if (!response || typeof response !== 'object') {
-        throw new Error('Invalid API response');
-      }
-
-      navigate('/receipt', { state: order });
+      const response = await createOrder(order);
+      console.log('API Response:', JSON.stringify(response, null, 2)); // Log the API response
+      navigate('/receipt', { state: { ...order, id: response.id } }); // Ensure the id is passed to the next page
     } catch (err) {
-      console.error('Error creating/updating order:', err);
-
+      console.error('Error creating order:', err);
       // Display the error message to the user
       if (err instanceof Error) {
-        setError(`Failed to process the order: ${err.message}`);
+        setError(`Failed to create the order: ${err.message}`);
       } else {
-        setError('Failed to process the order. Please try again.');
+        setError('Failed to create the order. Please try again.');
       }
     }
   };
@@ -86,14 +68,8 @@ const OrderPage = () => {
       </div>
       <div>
         <label>
-          Time:
-          <input type="time" value={time} onChange={handleTimeChange} min="16:00" max="23:00" />
-        </label>
-      </div>
-      <div>
-        <label>
           Number of People:
-          <input type="number" value={people} onChange={handlePeopleChange} min="1" max="10" />
+          <input type="number" value={count} onChange={handleCountChange} min="1" max="10" />
         </label>
       </div>
       <div>

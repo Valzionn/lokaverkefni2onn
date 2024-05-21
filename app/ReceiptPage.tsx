@@ -6,9 +6,13 @@ const ReceiptPage = () => {
   const location = useLocation();
   const { state } = location;
 
+  if (!state) {
+    return <div>Error: No order data found</div>;
+  }
+
   const calculatePrice = () => {
-    const foodPrice = state.people * 10;
-    const drinksPrice = state.selectedDrinks.length * 5;
+    const foodPrice = state.count * state.dish.price; // Example price for food
+    const drinksPrice = state.drinks.reduce((total: number, drink: any) => total + drink.price, 0); // Example price for drinks
     return foodPrice + drinksPrice;
   };
 
@@ -17,11 +21,10 @@ const ReceiptPage = () => {
       <h1>Receipt</h1>
       <div>
         <h2>Order Summary</h2>
-        <p>Dish: {state.dish.strMeal}</p>
-        <p>Drinks: {state.selectedDrinks.map((drink: any) => drink.strDrink).join(', ')}</p>
-        <p>Number of People: {state.people}</p>
-        <p>Date: {state.date}</p>
-        <p>Time: {state.time}</p>
+        <p>Dish: {state.dish.name}</p>
+        <p>Drinks: {state.drinks.map((drink: any) => drink.name).join(', ')}</p>
+        <p>Number of People: {state.count}</p>
+        <p>Date: {new Date(state.date).toLocaleDateString()}</p>
         <p>Email: {state.email}</p>
         <p>Total Price: ${calculatePrice()}</p>
       </div>
