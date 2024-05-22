@@ -14,7 +14,7 @@ const HomePage = () => {
     try {
       const existingOrder = await fetchOrderByEmail(email);
       if (existingOrder) {
-        navigate('/menu', { state: existingOrder });
+        navigate('/receipt', { state: existingOrder });
       } else {
         alert('Could not find order with email: ' + email);
       }
