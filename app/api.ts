@@ -1,10 +1,11 @@
 import { Dish, Drink, Order, Provision } from './types';
 
-const ordersApiUrl = 'http://localhost:3001/api/orders';
-const createOrderUrl = 'http://localhost:3001/api/create-order';
-const updateOrderUrl = 'http://localhost:3001/api/update-order';
-const orderByEmailUrl = (email: string) => `http://localhost:3001/api/order/${email}`;
-const orderByIdUrl = (id: number) => `http://localhost:3001/api/order/${id}`;
+const apiBaseUrl = 'http://localhost:3001/api';
+const ordersApiUrl = `${apiBaseUrl}/orders`;
+const createOrderUrl = `${apiBaseUrl}/create-order`;
+const updateOrderUrl = `${apiBaseUrl}/update-order`;
+const orderByEmailUrl = (email: string) => `${apiBaseUrl}/order/${email}`;
+const orderByIdUrl = (id: number) => `${apiBaseUrl}/order/${id}`;
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) {
@@ -15,12 +16,8 @@ const handleResponse = async <T>(response: Response): Promise<T> => {
 };
 
 export const fetchOrderByEmail = async (email: string): Promise<Order | null> => {
-  const response = await fetch(orderByEmailUrl(email));
-  const data = await handleResponse<Order | { error: string }>(response);
-  if ('error' in data) {
-    return null;
-  }
-  return data as Order;
+  const data = await handleResponse<Order | { error: string }>(await fetch(orderByEmailUrl(email)));
+  return 'error' in data ? null : data;
 };
 
 export const createOrder = async (order: Omit<Order, 'id'>): Promise<Order> => {
@@ -35,61 +32,53 @@ export const createOrder = async (order: Omit<Order, 'id'>): Promise<Order> => {
   return handleResponse<Order>(response);
 };
 
-export const fetchRandomDish = async (): Promise<Dish | null> => {
+const fetchFromApi = async <T>(url: string): Promise<T> => {
   try {
-    const response = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
-    const data = await handleResponse<{ meals: any[] }>(response);
-    return data.meals && data.meals.length > 0 ? transformMealToDish(data.meals[0]) : null;
+    return await handleResponse<T>(await fetch(url));
   } catch (error) {
-    console.error('Failed to fetch a random dish:', error);
-    return null;
+    console.error(`Failed to fetch from ${url}:`, error);
+    throw error;
   }
+};
+
+export const fetchRandomDish = async (): Promise<Dish | null> => {
+  const data = await fetchFromApi<{ meals: any[] }>('https://www.themealdb.com/api/json/v1/1/random.php');
+  return data.meals && data.meals.length > 0 ? transformMealToDish(data.meals[0]) : null;
 };
 
 export const fetchDrinks = async (): Promise<Drink[]> => {
-  try {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a');
-    const data = await handleResponse<{ drinks: any[] }>(response);
-    return data.drinks ? data.drinks.map(transformDrinkToDrink) : [];
-  } catch (error) {
-    console.error('Failed to fetch drinks:', error);
-    return [];
-  }
+  const data = await fetchFromApi<{ drinks: any[] }>('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a');
+  return data.drinks ? data.drinks.map(transformDrinkToDrink) : [];
 };
 
 export const fetchOrders = async (): Promise<Order[]> => {
-  const response = await fetch(ordersApiUrl);
-  return handleResponse<Order[]>(response);
+  return fetchFromApi<Order[]>(ordersApiUrl);
 };
 
 export const updateOrder = async (order: Order): Promise<Order> => {
-  const response = await fetch(updateOrderUrl, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(order),
-  });
-  return handleResponse<Order>(response);
+  return handleResponse<Order>(
+    await fetch(updateOrderUrl, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    })
+  );
 };
 
 export const deleteOrder = async (id: number): Promise<{ success: boolean; deletedorder?: Order }> => {
-  const response = await fetch(orderByIdUrl(id), {
-    method: 'DELETE',
-  });
-  return handleResponse<{ success: boolean; deletedorder?: Order }>(response);
+  return handleResponse<{ success: boolean; deletedorder?: Order }>(
+    await fetch(orderByIdUrl(id), { method: 'DELETE' })
+  );
 };
 
-const transformToProvision = (data: any): Provision => {
-  return {
-    id: data.idMeal || data.idDrink,
-    name: data.strMeal || data.strDrink,
-    description: data.strInstructions,
-    imageSource: data.strMealThumb || data.strDrinkThumb,
-    price: 1500, // Assigning a default price
-    category: data.strCategory,
-  };
-};
+const transformToProvision = (data: any): Provision => ({
+  id: data.idMeal || data.idDrink,
+  name: data.strMeal || data.strDrink,
+  description: data.strInstructions,
+  imageSource: data.strMealThumb || data.strDrinkThumb,
+  price: 1500, // Assigning a default price
+  category: data.strCategory,
+});
 
 const transformMealToDish = (meal: any): Dish => ({
   ...transformToProvision(meal),

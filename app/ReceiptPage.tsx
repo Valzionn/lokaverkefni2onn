@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Order } from './types';
 
 const ReceiptPage = () => {
   const navigate = useNavigate();
@@ -10,9 +11,11 @@ const ReceiptPage = () => {
     return <div>Error: No order data found</div>;
   }
 
+  const order: Order = state;
+
   const calculatePrice = () => {
-    const foodPrice = state.count * state.dish.price;
-    const drinksPrice = state.drinks.reduce((total: number, drink: any) => total + drink.price, 0);
+    const foodPrice = order.count * order.dish.price;
+    const drinksPrice = order.drinks.reduce((total: number, drink: any) => total + drink.price, 0);
     return foodPrice + drinksPrice;
   };
 
@@ -21,11 +24,11 @@ const ReceiptPage = () => {
       <h1>Receipt</h1>
       <div>
         <h2>Order Summary</h2>
-        <p>Dish: {state.dish.name}</p>
-        <p>Drinks: {state.drinks.map((drink: any) => drink.name).join(', ')}</p>
-        <p>Number of People: {state.count}</p>
-        <p>Date: {new Date(state.date).toLocaleDateString()}</p>
-        <p>Email: {state.email}</p>
+        <p>Dish: {order.dish.name}</p>
+        <p>Drinks: {order.drinks.map((drink: any) => drink.name).join(', ')}</p>
+        <p>Number of People: {order.count}</p>
+        <p>Date: {new Date(order.date).toLocaleDateString()}</p>
+        <p>Email: {order.email}</p>
         <p>Total Price: ${calculatePrice()}</p>
       </div>
       <button onClick={() => navigate('/')}>Back to Home</button>

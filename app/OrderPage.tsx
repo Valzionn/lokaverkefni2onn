@@ -46,9 +46,12 @@ const OrderPage = () => {
       email,
       dish,
       count,
-      date: new Date(date),
+      date: new Date(date), // Ensure date is a Date object
       drinks: selectedDrinks,
     };
+
+    // Detailed log of the order object
+    console.log("Order to be sent:", JSON.stringify(order, null, 2)); 
 
     try {
       const response = await createOrder(order);
