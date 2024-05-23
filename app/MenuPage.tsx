@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchRandomDish } from './api';
-import { Dish } from './types';
+import { Dish, Order } from './types';
 
 const MenuPage = () => {
   const [dish, setDish] = useState<Dish | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const existingOrder = location.state?.order as Order | undefined;
 
   useEffect(() => {
     const getDish = async () => {
       try {
-        const randomDish = await fetchRandomDish();
-        setDish(randomDish);
+        if (existingOrder) {
+          setDish(existingOrder.dish);
+        } else {
+          const randomDish = await fetchRandomDish();
+          setDish(randomDish);
+        }
       } catch (err) {
         console.error('Failed to fetch dish:', err);
         setError('Failed to fetch dish');
@@ -22,11 +28,11 @@ const MenuPage = () => {
       }
     };
     getDish();
-  }, []);
+  }, [existingOrder]);
 
   const handleNext = () => {
     if (dish) {
-      navigate('/drink', { state: { dish } });
+      navigate('/drink', { state: { dish, order: existingOrder } });
     }
   };
 

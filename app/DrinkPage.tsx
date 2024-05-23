@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchDrinks } from './api';
-import { Drink, Dish } from './types';
+import { Drink, Dish, Order } from './types';
 
 const DrinkPage = () => {
   const [drinks, setDrinks] = useState<Drink[]>([]);
@@ -10,13 +10,16 @@ const DrinkPage = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { state } = location as { state: { dish: Dish } };
+  const { dish, order } = location.state as { dish: Dish, order?: Order };
 
   useEffect(() => {
     const getDrinks = async () => {
       try {
         const drinksData = await fetchDrinks();
         setDrinks(drinksData);
+        if (order) {
+          setSelectedDrinks(order.drinks);
+        }
       } catch (err) {
         console.error('Failed to fetch drinks:', err);
         setError('Failed to fetch drinks');
@@ -25,7 +28,7 @@ const DrinkPage = () => {
       }
     };
     getDrinks();
-  }, []);
+  }, [order]);
 
   const handleSelectDrink = (drink: Drink) => {
     setSelectedDrinks((prev) => {
@@ -37,7 +40,7 @@ const DrinkPage = () => {
   };
 
   const handleNext = () => {
-    navigate('/order', { state: { ...state, selectedDrinks } });
+    navigate('/order', { state: { dish, selectedDrinks, order } });
   };
 
   if (loading) return <div>Loading...</div>;

@@ -56,13 +56,15 @@ export const fetchOrders = async (): Promise<Order[]> => {
 };
 
 export const updateOrder = async (order: Order): Promise<Order> => {
-  return handleResponse<Order>(
-    await fetch(updateOrderUrl, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(order),
-    })
-  );
+  const response = await fetch(updateOrderUrl, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(order),
+  });
+
+  return handleResponse<Order>(response);
 };
 
 export const deleteOrder = async (id: number): Promise<{ success: boolean; deletedorder?: Order }> => {

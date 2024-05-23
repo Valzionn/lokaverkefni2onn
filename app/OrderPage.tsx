@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createOrder } from './api';
+import { createOrder, updateOrder } from './api';
 import { Dish, Drink, Order } from './types';
 
 const OrderPage = () => {
@@ -10,11 +10,17 @@ const OrderPage = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { dish, selectedDrinks } = location.state as { dish: Dish, selectedDrinks: Drink[] };
+  const { dish, selectedDrinks, order } = location.state as { dish: Dish, selectedDrinks: Drink[], order?: Order };
 
   useEffect(() => {
-    setDate(new Date().toISOString().slice(0, 10));
-  }, []);
+    if (order) {
+      setDate(new Date(order.date).toISOString().slice(0, 10));
+      setCount(order.count);
+      setEmail(order.email);
+    } else {
+      setDate(new Date().toISOString().slice(0, 10));
+    }
+  }, [order]);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDate(e.target.value);
@@ -28,7 +34,7 @@ const OrderPage = () => {
     setEmail(e.target.value);
   };
 
-  const handleNext = async () => {
+  const handleSubmit = async () => {
     setError(null);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -37,31 +43,33 @@ const OrderPage = () => {
       return;
     }
 
-    if (!dish || !selectedDrinks) {
+    if (!dish || selectedDrinks.length === 0) {
       setError('Dish and drinks are required.');
       return;
     }
 
-    const order: Omit<Order, 'id'> = {
+    const newOrder: Omit<Order, 'id'> & { name: string } = {
+      name: 'temporary name', 
       email,
       dish,
       count,
-      date: new Date(date), // Ensure date is a Date object
+      date: new Date(date), 
       drinks: selectedDrinks,
     };
 
-    // Detailed log of the order object
-    console.log("Order to be sent:", JSON.stringify(order, null, 2)); 
+    console.log("Order to be sent:", JSON.stringify(newOrder, null, 2)); 
 
     try {
-      const response = await createOrder(order);
-      navigate('/receipt', { state: { ...order, id: response.id } });
+      const response = order
+        ? await updateOrder({ ...order, ...newOrder }) 
+        : await createOrder(newOrder); 
+      navigate('/receipt', { state: { ...newOrder, id: response.id } });
     } catch (err) {
-      console.error('Error creating order:', err);
+      console.error('Error submitting order:', err);
       if (err instanceof Error) {
-        setError(`Failed to create the order: ${err.message}`);
+        setError(`Failed to submit the order: ${err.message}`);
       } else {
-        setError('Failed to create the order. Please try again.');
+        setError('Failed to submit the order. Please try again.');
       }
     }
   };
@@ -102,7 +110,7 @@ const OrderPage = () => {
         ))}
       </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button onClick={handleNext}>Next</button>
+      <button onClick={handleSubmit}>{order ? 'Update' : 'Submit'} Order</button>
     </div>
   );
 };
