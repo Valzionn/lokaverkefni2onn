@@ -78,7 +78,7 @@ const transformToProvision = (data: any): Provision => ({
   name: data.strMeal || data.strDrink,
   description: data.strInstructions,
   imageSource: data.strMealThumb || data.strDrinkThumb,
-  price: 1500, // Assigning a default price
+  price: 1500, 
   category: data.strCategory,
 });
 

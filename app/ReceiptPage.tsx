@@ -7,7 +7,7 @@ const ReceiptPage = () => {
   const location = useLocation();
   const order = location.state as Order;
 
-  console.log('Received order in ReceiptPage:', order); // Debugging information
+  console.log('Received order in ReceiptPage:', order);
 
   if (!order) {
     return <div>Error: No order data found</div>;
