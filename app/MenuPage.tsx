@@ -41,7 +41,6 @@ const MenuPage = () => {
 
   return (
     <div>
-      <h1>Menu</h1>
       {dish ? (
         <div>
           <h2>{dish.name}</h2>

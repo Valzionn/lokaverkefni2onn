@@ -76,7 +76,6 @@ const OrderPage = () => {
 
   return (
     <div>
-      <h1>Order</h1>
       <div>
         <label>
           Date:
@@ -96,16 +95,14 @@ const OrderPage = () => {
         </label>
       </div>
       <div>
-        <h2>Dish</h2>
+        <h2>Dish -</h2>
         <p>{dish.name}</p>
-        <p>{dish.description}</p>
       </div>
       <div>
-        <h2>Drinks</h2>
+        <h2>Drinks -</h2>
         {selectedDrinks.map((drink) => (
           <div key={drink.id}>
             <p>{drink.name}</p>
-            <p>{drink.description}</p>
           </div>
         ))}
       </div>

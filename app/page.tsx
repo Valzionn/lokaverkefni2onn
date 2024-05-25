@@ -7,10 +7,12 @@ import MenuPage from './MenuPage';
 import DrinkPage from './DrinkPage';
 import OrderPage from './OrderPage';
 import ReceiptPage from './ReceiptPage';
+import Header from './Header';
 
 const Home = () => {
   return (
     <Router>
+      <Header></Header>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/menu" element={<MenuPage />} />

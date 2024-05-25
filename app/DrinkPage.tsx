@@ -48,7 +48,6 @@ const DrinkPage = () => {
 
   return (
     <div>
-      <h1>Drinks</h1>
       <div>
         {drinks.map((drink) => (
           <div key={drink.id} onClick={() => handleSelectDrink(drink)}>

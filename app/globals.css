@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.active {
+    font-weight: bold;
+    color: red; 
+}
+
+.disabled {
+    color: gray; 
+    cursor: not-allowed;
+    pointer-events: none; 
+    text-decoration: none; 
+}
+
+header {
+    background-color: #f8f9fa;
+    padding: 1rem;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+nav ul li a.active {
+    font-weight: bold;
+    color: red; 
+}
+
+nav ul li a.disabled { 
+    cursor: not-allowed;
+    pointer-events: none;
+}

@@ -29,7 +29,6 @@ const ReceiptPage = () => {
 
   return (
     <div>
-      <h1>Receipt</h1>
       <div>
         <h2>Order Summary</h2>
         <p>Dish: {order.dish?.name || 'N/A'}</p>
