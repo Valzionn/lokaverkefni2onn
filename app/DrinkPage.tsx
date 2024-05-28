@@ -47,8 +47,8 @@ const DrinkPage = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <div>
+    <div className='container'>
+      <div className='drinks'>
         {drinks.map((drink) => (
           <div key={drink.id} onClick={() => handleSelectDrink(drink)}>
             <h2>{drink.name}</h2>

@@ -75,7 +75,7 @@ const OrderPage = () => {
   };
 
   return (
-    <div>
+    <div className='container'>
       <div>
         <label>
           Date:

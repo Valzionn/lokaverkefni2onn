@@ -2,21 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    height: 100vh;
+}
+
+.drinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
 .active {
     font-weight: bold;
     color: red; 
 }
 
 .disabled {
-    color: gray; 
+    color: seagreen; 
     cursor: not-allowed;
     pointer-events: none; 
     text-decoration: none; 
 }
 
 header {
-    background-color: #f8f9fa;
+    background-color: hsla(210, 70%, 85%, 1);
     padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 nav ul {
@@ -24,6 +41,7 @@ nav ul {
     padding: 0;
     display: flex;
     gap: 1rem;
+    align-items: center;
 }
 
 nav ul li {
@@ -44,3 +62,4 @@ nav ul li a.disabled {
     cursor: not-allowed;
     pointer-events: none;
 }
+

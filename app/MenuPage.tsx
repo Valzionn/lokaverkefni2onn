@@ -40,7 +40,7 @@ const MenuPage = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <div className='container'>
       {dish ? (
         <div>
           <h2>{dish.name}</h2>
