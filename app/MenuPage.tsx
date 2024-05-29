@@ -44,7 +44,7 @@ const MenuPage = () => {
       {dish ? (
         <div>
           <h2>{dish.name}</h2>
-          <img src={dish.imageSource} alt={dish.name} />
+          <img src={dish.imageSource} alt={dish.name} className='responsive-img' />
           <p>{dish.description}</p>
           <button onClick={handleNext}>Next</button>
         </div>

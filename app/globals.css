@@ -5,7 +5,6 @@
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     height: 100vh;
     width: 100vw;
 }
@@ -63,3 +62,40 @@ nav ul li a.disabled {
     cursor: not-allowed;
     pointer-events: none;
 }
+
+.responsive-img {
+    width: 100px; 
+    max-width: 100%;
+    height: auto; 
+  }
+  
+  
+  @media (min-width: 640px) {
+    .responsive-img {
+      width: 150px; 
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .responsive-img {
+      width: 200px; 
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .responsive-img {
+      width: 300px; 
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .responsive-img {
+      width: 400px; 
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .responsive-img {
+        width: 500px;
+    }
+  }

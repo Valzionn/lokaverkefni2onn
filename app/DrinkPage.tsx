@@ -52,7 +52,7 @@ const DrinkPage = () => {
         {drinks.map((drink) => (
           <div key={drink.id} onClick={() => handleSelectDrink(drink)}>
             <h2>{drink.name}</h2>
-            <img src={drink.imageSource} alt={drink.name} />
+            <img src={drink.imageSource} alt={drink.name} className='responsive-img' />
             {selectedDrinks.includes(drink) && <span>Selected</span>}
           </div>
         ))}
