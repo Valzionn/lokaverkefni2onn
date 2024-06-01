@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
+import logo from "./lb-logo.png"
 
 
 const Header = () => {
@@ -37,7 +38,7 @@ const Header = () => {
 
     return (
         <header>
-            <img src="./lb-logo.png" alt="logo" />
+            <img src={logo} alt="logo" />
             <nav>
                 <ul>
                     {links.map((link) => (
