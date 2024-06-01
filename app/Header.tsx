@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
+import Image from "next/image";
 import logo from "./lb-logo.png"
 
 
@@ -38,7 +39,15 @@ const Header = () => {
 
     return (
         <header>
-            <img src={logo} alt="logo" />
+            <div className="logo-container">
+                <Image
+                    src={logo}
+                    layout="fill"
+                    objectFit="contain"
+                    className="logo"
+                    alt="logo"
+                />
+            </div>
             <nav>
                 <ul>
                     {links.map((link) => (
