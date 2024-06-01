@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import React from "react";
 
+
 const Header = () => {
     const links = [
         {
@@ -36,6 +37,7 @@ const Header = () => {
 
     return (
         <header>
+            <img src="./lb-logo.png" alt="logo" />
             <nav>
                 <ul>
                     {links.map((link) => (
