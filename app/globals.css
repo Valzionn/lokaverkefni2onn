@@ -2,134 +2,180 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(
+    to top,
+    rgba(91, 182, 63, 0.116) 10%,
+    rgba(63, 182, 136, 0.459) 40%,
+    rgba(13, 179, 101, 0.459)
+  );
+  background-size:cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .container {
-    background-color: rgba(91, 182, 63, 0.116);
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    padding-right: 5px;
-    padding-left: 5px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100%;
+  width: 100vw;
+  margin-top: 10px;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 .drinks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+.drink-item {
+  position: relative;
+  cursor: pointer;
+}
+
+.drink-content {
+  position: relative;
+}
+
+.drink-name {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: wheat;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .active {
-    font-weight: bold;
-    color: red; 
+  font-weight: bold;
+  color: red;
 }
 
 .disabled {
-    color: seagreen; 
-    cursor: not-allowed;
-    pointer-events: none; 
-    text-decoration: none; 
+  color: seagreen;
+  cursor: not-allowed;
+  pointer-events: none;
+  text-decoration: none;
 }
 
+
 header {
-    background-color: hsla(210, 70%, 85%, 1);
-    max-height: 180px;
-    padding: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: hsla(210, 70%, 85%, 1);
+  box-shadow: darkslategray 0px 2px 5px;
+  max-height: 180px;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 nav ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 nav ul li {
-    display: inline;
+  display: inline;
 }
 
 nav ul li a {
-    text-decoration: none;
-    color: #000;
+  text-decoration: none;
+  color: #000;
 }
 
 nav ul li a.active {
-    font-weight: bold;
-    color: red; 
+  font-weight: bold;
+  color: red;
 }
 
-nav ul li a.disabled { 
-    cursor: not-allowed;
-    pointer-events: none;
+nav ul li a.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .responsive-img {
-    width: 100px; 
-    max-width: 100%;
-    height: auto; 
+  width: 100px;
+  max-width: 100%;
+  height: auto;
+}
+
+.logo-container {
+  width: 7vw;
+  height: 7vw;
+  max-width: 200px;
+  max-height: 200px;
+  position: relative;
+  margin: -10px;
+  left: -30px;
+}
+
+
+@media (min-width: 640px) {
+  .responsive-img {
+    width: 150px;
   }
 
   .logo-container {
-    width: 7vw;
-    height: 7vw;
-    max-width: 200px;
-    max-height: 200px;
-    position: relative;
-    margin: -10px;
-    left: -30px;
+    max-width: 250px;
+    max-height: 250px;
   }
-  
-  
-  @media (min-width: 640px) {
-    .responsive-img {
-      width: 150px; 
-    }
-    .logo-container {
-      max-width: 250px;
-      max-height: 250px;
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .responsive-img {
-      width: 200px; 
-    }
-    .logo-container {
-      max-width: 250px;
-      max-height: 250px;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .responsive-img {
-      width: 300px; 
-    }
-    .logo-container {
-      max-width: 200px;
-      max-height: 200px;
-    }
-  }
-  
-  @media (min-width: 1280px) {
-    .responsive-img {
-      width: 400px; 
-    }
-    .logo-container {
-      max-width: 200px;
-      max-height: 200px;
-    }
+}
+
+@media (min-width: 768px) {
+  .responsive-img {
+    width: 200px;
   }
 
-  @media (min-width: 1536px) {
-    .responsive-img {
-        width: 500px;
-    }
-    .logo-container {
-      max-width: 200px;
-      max-height: 200px;
-    }
+  .logo-container {
+    max-width: 250px;
+    max-height: 250px;
   }
+}
+
+@media (min-width: 1024px) {
+  .responsive-img {
+    width: 300px;
+  }
+
+  .logo-container {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .responsive-img {
+    width: 400px;
+  }
+
+  .logo-container {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .responsive-img {
+    width: 500px;
+  }
+
+  .logo-container {
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
