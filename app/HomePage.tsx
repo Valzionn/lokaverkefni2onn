@@ -34,9 +34,9 @@ const HomePage = () => {
           placeholder="Enter your email"
           value={email}
           onChange={handleEmailChange}
-          className="border p-2"
+          className="text-xs border p-2"
         />
-        <button className="bg-green-500 text-white px-4 py-2 ml-2" onClick={handleCheckOrder}>Check Order</button>
+        <button className="bg-green-500 hover:bg-blue-700 shadow-xl outline outline-1 outline-indigo-300 text-xs text-white px-2 py-1 sm:text-sm sm:px-2 sm:py-1 md:text-md md:px-2 md:py-1.5 lg:text-lg lg:px-2 lg:py-2 mt-2 w-24 sm:w-32 md:w-38 lg:w-46 ml-2" onClick={handleCheckOrder}>Check Order</button>
       </div>
     </div>
   );
