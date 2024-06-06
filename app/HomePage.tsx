@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchOrderByEmail } from './api';
+import SwiperComponent from './SwiperComponent';
 
 const HomePage = () => {
   const [email, setEmail] = useState('');
@@ -26,6 +27,7 @@ const HomePage = () => {
 
   return (
     <div className="container">
+      <div><SwiperComponent /></div>
       <h1 className="font-bold text-sm sm:text-xl md:text-2xl lg:text-3xl">Welcome to Large Bites</h1>
       <button className="bg-blue-500 hover:bg-blue-700 shadow-xl outline outline-1 outline-indigo-300 text-xs text-white px-2 py-1 sm:text-sm sm:px-2 sm:py-1 md:text-md md:px-2 md:py-1.5 lg:text-lg lg:px-2 lg:py-2 mt-2 w-24 sm:w-32 md:w-38 lg:w-46" onClick={() => navigate('/menu')}>Start Order</button>
       <div className="mt-4">
