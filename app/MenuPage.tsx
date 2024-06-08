@@ -46,7 +46,9 @@ const MenuPage = () => {
           <div className='dish-content'>
             <div className='image-container'>
               <img src={dish.imageSource} alt={dish.name} className='responsive-img' />
+              <div className='dish-name-container'>
               <h2 className='dish-name'>{dish.name}</h2>
+              </div>
             </div>
               <p className='dish-description text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl text-right'>{dish.description}</p>
           </div>

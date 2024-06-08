@@ -30,15 +30,13 @@ const ReceiptPage = () => {
   };
 
   return (
-    <div className='container max-w-4xl mx-auto mt-8 p-6 bg-white shadow-md rounded-lg flex flex-col items-center'>
-      <div className='relative w-full flex items-center justify-center'>
-        {/* Background Image */}
+    <div className='container'>
+      <div className='flex justify-center items-center w-full'>
+        <div className='relative p-8'>
         <div 
           className='absolute inset-0 bg-cover bg-center opacity-30 rounded-lg'
-          style={{ backgroundImage: `url(${dollar.src})` }} // Adjust if not using Next.js Image
+          style={{ backgroundImage: `url(${dollar.src})` }}
         />
-        {/* Overlay to enhance readability */}
-        <div className='relative p-8 bg-white bg-opacity-80 rounded-lg'>
           <h2 className='text-2xl font-bold mb-4 text-center'>Order Summary</h2>
           <p className='mb-2'><span className='font-semibold'>Dish:</span> {order.dish?.name || 'N/A'}</p>
           <p className='mb-2'><span className='font-semibold'>Drinks:</span> {order.drinks?.map((drink) => drink.name).join(', ') || 'N/A'}</p>
@@ -48,16 +46,16 @@ const ReceiptPage = () => {
           <p className='mb-2'><span className='font-semibold'>Total Price:</span> ${calculatePrice()}</p>
         </div>
       </div>
-      <div className='flex mt-6 space-x-4'>
+      <div className='flex justify-center mt-6 space-x-4'>
         <button 
           onClick={() => navigate('/')} 
-          className='bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out'
+          className='bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out'
         >
           Back to Home
         </button>
         <button 
           onClick={handleUpdateOrder} 
-          className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out'
+          className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out'
         >
           Update Order
         </button>
