@@ -1,6 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Order } from './types';
+import Image from 'next/image';
+import dollar from './dollar.png'
 
 const ReceiptPage = () => {
   const navigate = useNavigate();
@@ -28,18 +30,38 @@ const ReceiptPage = () => {
   };
 
   return (
-    <div className='container'>
-      <div>
-        <h2>Order Summary</h2>
-        <p>Dish: {order.dish?.name || 'N/A'}</p>
-        <p>Drinks: {order.drinks?.map((drink: any) => drink.name).join(', ') || 'N/A'}</p>
-        <p>Number of People: {order.count}</p>
-        <p>Date: {new Date(order.date).toLocaleDateString()}</p>
-        <p>Email: {order.email}</p>
-        <p>Total Price: ${calculatePrice()}</p>
+    <div className='container max-w-4xl mx-auto mt-8 p-6 bg-white shadow-md rounded-lg flex flex-col items-center'>
+      <div className='relative w-full flex items-center justify-center'>
+        {/* Background Image */}
+        <div 
+          className='absolute inset-0 bg-cover bg-center opacity-30 rounded-lg'
+          style={{ backgroundImage: `url(${dollar.src})` }} // Adjust if not using Next.js Image
+        />
+        {/* Overlay to enhance readability */}
+        <div className='relative p-8 bg-white bg-opacity-80 rounded-lg'>
+          <h2 className='text-2xl font-bold mb-4 text-center'>Order Summary</h2>
+          <p className='mb-2'><span className='font-semibold'>Dish:</span> {order.dish?.name || 'N/A'}</p>
+          <p className='mb-2'><span className='font-semibold'>Drinks:</span> {order.drinks?.map((drink) => drink.name).join(', ') || 'N/A'}</p>
+          <p className='mb-2'><span className='font-semibold'>Number of People:</span> {order.count}</p>
+          <p className='mb-2'><span className='font-semibold'>Date:</span> {new Date(order.date).toLocaleDateString()}</p>
+          <p className='mb-2'><span className='font-semibold'>Email:</span> {order.email}</p>
+          <p className='mb-2'><span className='font-semibold'>Total Price:</span> ${calculatePrice()}</p>
+        </div>
       </div>
-      <button onClick={() => navigate('/')}>Back to Home</button>
-      <button onClick={handleUpdateOrder}>Update Order</button>
+      <div className='flex mt-6 space-x-4'>
+        <button 
+          onClick={() => navigate('/')} 
+          className='bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out'
+        >
+          Back to Home
+        </button>
+        <button 
+          onClick={handleUpdateOrder} 
+          className='bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out'
+        >
+          Update Order
+        </button>
+      </div>
     </div>
   );
 };

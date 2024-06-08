@@ -49,20 +49,20 @@ const OrderPage = () => {
     }
 
     const newOrder: Omit<Order, 'id'> & { name: string } = {
-      name: 'temporary name', 
+      name: 'temporary name',
       email,
       dish,
       count,
-      date: new Date(date), 
+      date: new Date(date),
       drinks: selectedDrinks,
     };
 
-    console.log("Order to be sent:", JSON.stringify(newOrder, null, 2)); 
+    console.log("Order to be sent:", JSON.stringify(newOrder, null, 2));
 
     try {
       const response = order
-        ? await updateOrder({ ...order, ...newOrder }) 
-        : await createOrder(newOrder); 
+        ? await updateOrder({ ...order, ...newOrder })
+        : await createOrder(newOrder);
       navigate('/receipt', { state: { ...newOrder, id: response.id } });
     } catch (err) {
       console.error('Error submitting order:', err);
@@ -76,38 +76,41 @@ const OrderPage = () => {
 
   return (
     <div className='container'>
-      <div>
-        <label>
-          Date:
-          <input type="date" value={date} onChange={handleDateChange} />
-        </label>
+      <div className='flex flex-col justify-center items-center p-4 text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl'>
+        <div><h1>Pontunin Thin</h1></div>
+        <div className=''>
+          <label>
+            Date:
+            <input type="date" value={date} onChange={handleDateChange} />
+          </label>
+        </div>
+        <div>
+          <label>
+            Number of People:
+            <input type="number" value={count} onChange={handleCountChange} min="1" max="10" />
+          </label>
+        </div>
+        <div>
+          <label>
+            Email:
+            <input type="email" value={email} onChange={handleEmailChange} />
+          </label>
+        </div>
+        <div>
+          <h2>Dish -</h2>
+          <p>{dish.name}</p>
+        </div>
+        <div>
+          <h2>Drinks -</h2>
+          {selectedDrinks.map((drink) => (
+            <div key={drink.id}>
+              <p>{drink.name}</p>
+            </div>
+          ))}
+        </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button className="bg-blue-500 hover:bg-blue-700 shadow-xl outline outline-1 outline-indigo-300 text-xs text-white px-2 py-1 sm:text-sm sm:px-2 sm:py-1 md:text-md md:px-2 md:py-1.5 lg:text-lg lg:px-2 lg:py-2 mt-2 w-24 sm:w-32 md:w-38 lg:w-46" onClick={handleSubmit}>{order ? 'Update' : 'Submit'} Order</button>
       </div>
-      <div>
-        <label>
-          Number of People:
-          <input type="number" value={count} onChange={handleCountChange} min="1" max="10" />
-        </label>
-      </div>
-      <div>
-        <label>
-          Email:
-          <input type="email" value={email} onChange={handleEmailChange} />
-        </label>
-      </div>
-      <div>
-        <h2>Dish -</h2>
-        <p>{dish.name}</p>
-      </div>
-      <div>
-        <h2>Drinks -</h2>
-        {selectedDrinks.map((drink) => (
-          <div key={drink.id}>
-            <p>{drink.name}</p>
-          </div>
-        ))}
-      </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button className="bg-blue-500 hover:bg-blue-700 shadow-xl outline outline-1 outline-indigo-300 text-xs text-white px-2 py-1 sm:text-sm sm:px-2 sm:py-1 md:text-md md:px-2 md:py-1.5 lg:text-lg lg:px-2 lg:py-2 mt-2 w-24 sm:w-32 md:w-38 lg:w-46" onClick={handleSubmit}>{order ? 'Update' : 'Submit'} Order</button>
     </div>
   );
 };

@@ -38,7 +38,7 @@ body {
 
 .drinks {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(100px, 400px));
   gap: 0.5rem;
   justify-items: center;
 }
@@ -194,7 +194,6 @@ nav ul li a.disabled {
   max-height: 100%;
   object-fit: contain;
 }
-
 
 @media (min-width: 640px) {
   .responsive-img {
