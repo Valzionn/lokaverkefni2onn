@@ -77,7 +77,7 @@ const OrderPage = () => {
   return (
     <div className='container'>
       <div className='flex flex-col justify-center items-center p-4 text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl'>
-        <div><h1>Pontunin Thin</h1></div>
+        <div><h1 className='flex justify-center font-bold text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-right mb-4'>Your Order</h1></div>
         <div className=''>
           <label>
             Date:
@@ -109,7 +109,7 @@ const OrderPage = () => {
           ))}
         </div>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button className="bg-blue-500 hover:bg-blue-700 shadow-xl outline outline-1 outline-indigo-300 text-xs text-white px-2 py-1 sm:text-sm sm:px-2 sm:py-1 md:text-md md:px-2 md:py-1.5 lg:text-lg lg:px-2 lg:py-2 mt-2 w-24 sm:w-32 md:w-38 lg:w-46" onClick={handleSubmit}>{order ? 'Update' : 'Submit'} Order</button>
+        <button className="bg-blue-500 rounded-md hover:bg-blue-700 shadow-xl outline outline-1 outline-indigo-300 text-xs text-white px-2 py-1 sm:text-sm sm:px-2 sm:py-1 md:text-md md:px-2 md:py-1.5 lg:text-lg lg:px-2 lg:py-2 mt-2 w-24 sm:w-32 md:w-38 lg:w-46" onClick={handleSubmit}>{order ? 'Update' : 'Submit'} Order</button>
       </div>
     </div>
   );

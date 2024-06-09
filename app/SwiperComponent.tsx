@@ -1,15 +1,13 @@
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
-import Image from 'next/image';
-import cat1 from './Cat1.jpeg'; 
-import cat2 from './Cat2.png'; 
-import cat3 from './Cat3.png'; 
-import cat4 from './Cat4.png'; 
-import cat5 from './Cat5.png'; 
+import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/effect-coverflow'
+import 'swiper/css/pagination'
+import { EffectCoverflow, Pagination } from 'swiper/modules'
+import Image from 'next/image'
+import diner1 from "./diner1.jpg"
+import diner2 from "./diner2.jpg"
+import diner3 from "./diner3.jpg"
 
 export default function SwiperComponent() {
   return (
@@ -30,26 +28,143 @@ export default function SwiperComponent() {
         loop={true}
         pagination={{ clickable: true }}
         modules={[EffectCoverflow, Pagination]}
-        className="h-[50vh] sm:h-[40vh] md:h-[30vh] lg:h-[25vh] xl:h-[20vh] w-fit"
+        className="h-[45vh] sm:h-[40vh] md:h-[40vh] lg:h-[40vh] xl:h-[30vh] w-fit"
       >
-        {[cat1, cat2, cat3, cat4, cat5].map((image, index) => (
-          <SwiperSlide
-            key={index}
-            className="flex items-center justify-center p-0 m-0"
-            style={{ width: 'auto' }}
-          >
-            <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
-              <Image
-                src={image}
-                alt={`Cat ${index + 1}`}
-                layout="responsive"
-                width={300}
-                height={300}
-                className="object-contain"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner1}
+              alt="Diner 1"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner2}
+              alt="Diner 2"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner3}
+              alt="Diner 3"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner1}
+              alt="Diner 1"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner2}
+              alt="Diner 2"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner3}
+              alt="Diner 3"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner1}
+              alt="Diner 1"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner2}
+              alt="Diner 2"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center p-0 m-0" style={{ width: 'auto' }}>
+          <div className="relative flex items-center justify-center w-full h-full p-0 m-0">
+            <Image
+              src={diner3}
+              alt="Diner 3"
+              style={{
+                width: '100%',
+                height: '100%'
+              }}
+              width={300}
+              height={300}
+              className="object-contain"
+            />
+          </div>
+        </SwiperSlide>
       </Swiper>
     </div>
   );

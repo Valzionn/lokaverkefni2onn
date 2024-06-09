@@ -1,7 +1,7 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Order } from './types';
-import Image from 'next/image';
+import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Order } from './types'
+import Image from 'next/image'
 import dollar from './dollar.png'
 
 const ReceiptPage = () => {

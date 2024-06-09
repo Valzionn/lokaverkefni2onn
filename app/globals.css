@@ -68,7 +68,6 @@ word-wrap: break-word;
 }
 
 .dish-content {
-  display: flex;
   max-width: 800px;
   position: relative;
   align-items: flex-start;
@@ -81,11 +80,6 @@ word-wrap: break-word;
 
 .drink-content {
   position: relative;
-}
-
-.dish-description {
-  margin-left: 20px;
-  flex: 1;
 }
 
 .drink-name {
@@ -164,7 +158,7 @@ nav ul li a.disabled {
   max-height: 200px;
   position: relative;
   margin: -10px;
-  left: -30px;
+  left: -20px;
 }
 
 .swiper-background {
@@ -254,7 +248,7 @@ nav ul li a.disabled {
 
 @media (min-width: 1536px) {
   .responsive-img {
-    width: 500px;
+    width: 400px;
   }
 
 
