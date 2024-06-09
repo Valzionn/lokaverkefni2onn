@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { createOrder, updateOrder } from './api';
 import { Dish, Drink, Order } from './types';
+import dollar from './dollar.png'
 
 const OrderPage = () => {
   const [date, setDate] = useState('');
@@ -76,40 +77,55 @@ const OrderPage = () => {
 
   return (
     <div className='container'>
-      <div className='flex flex-col justify-center items-center p-4 text-xs sm:text-sm md:text-md lg:text-lg xl:text-xl'>
-        <div><h1 className='flex justify-center font-bold text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-right mb-4'>Your Order</h1></div>
-        <div className=''>
-          <label>
-            Date:
-            <input type="date" value={date} onChange={handleDateChange} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Number of People:
-            <input type="number" value={count} onChange={handleCountChange} min="1" max="10" />
-          </label>
-        </div>
-        <div>
-          <label>
-            Email:
-            <input type="email" value={email} onChange={handleEmailChange} />
-          </label>
-        </div>
-        <div>
-          <h2>Dish -</h2>
-          <p>{dish.name}</p>
-        </div>
-        <div>
-          <h2>Drinks -</h2>
-          {selectedDrinks.map((drink) => (
-            <div key={drink.id}>
-              <p>{drink.name}</p>
+      <div className='flex justify-center items-center w-full'>
+        <div className='relative p-8 w-full max-w-lg'>
+          <div 
+            className='absolute inset-0 bg-cover bg-center opacity-30 rounded-lg'
+            style={{ backgroundImage: `url(${dollar.src})` }}
+          />
+          <div className='relative z-10'>
+            <h1 className='text-2xl font-bold mb-4 text-center text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl'>Your Order</h1>
+            <div className='mb-4'>
+              <label className='block'>
+                Date:
+                <input type="date" value={date} onChange={handleDateChange} className='mt-1 p-2 border border-gray-300 rounded-md w-full' />
+              </label>
             </div>
-          ))}
+            <div className='mb-4'>
+              <label className='block'>
+                Number of People:
+                <input type="number" value={count} onChange={handleCountChange} min="1" max="10" className='mt-1 p-2 border border-gray-300 rounded-md w-full' />
+              </label>
+            </div>
+            <div className='mb-4'>
+              <label className='block'>
+                Email:
+                <input type="email" value={email} onChange={handleEmailChange} className='mt-1 p-2 border border-gray-300 rounded-md w-full' />
+              </label>
+            </div>
+            <div className='mb-4'>
+              <h2 className='font-semibold'>Dish:</h2>
+              <p>{dish.name || 'N/A'}</p>
+            </div>
+            <div className='mb-4'>
+              <h2 className='font-semibold'>Drinks:</h2>
+              {selectedDrinks.length > 0 ? selectedDrinks.map((drink) => (
+                <div key={drink.id}>
+                  <p>{drink.name}</p>
+                </div>
+              )) : <p>N/A</p>}
+            </div>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div className='flex justify-center mt-4'>
+              <button 
+                className="bg-blue-500 rounded-md hover:bg-blue-700 shadow-xl outline outline-1 outline-indigo-300 text-white px-4 py-2 transition duration-300 ease-in-out"
+                onClick={handleSubmit}
+              >
+                {order ? 'Update' : 'Submit'} Order
+              </button>
+            </div>
+          </div>
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button className="bg-blue-500 rounded-md hover:bg-blue-700 shadow-xl outline outline-1 outline-indigo-300 text-xs text-white px-2 py-1 sm:text-sm sm:px-2 sm:py-1 md:text-md md:px-2 md:py-1.5 lg:text-lg lg:px-2 lg:py-2 mt-2 w-24 sm:w-32 md:w-38 lg:w-46" onClick={handleSubmit}>{order ? 'Update' : 'Submit'} Order</button>
       </div>
     </div>
   );
